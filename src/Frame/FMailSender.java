@@ -5,19 +5,32 @@
  */
 package Frame;
 
+
+import Control.Control;
+import Fachada.FacadeMailSender;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author dianacastro
  */
-public class FMailSender extends javax.swing.JFrame {
-
+public final class FMailSender extends javax.swing.JFrame {
+    String password;
+    String correoRemitente;
+    String server;
     /**
      * Creates new form MailSender
      */
-    public FMailSender() {
+    public FMailSender(String correoRemitente, String password, String server) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Mail Sender");
+        
+        this.password = password;
+        this.correoRemitente = correoRemitente;
+        this.server = server;
+        
+        inicializarComboBox();
     }
 
     /**
@@ -29,8 +42,6 @@ public class FMailSender extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblServidor = new javax.swing.JLabel();
-        cbServidor = new javax.swing.JComboBox<>();
         lblDestinatario = new javax.swing.JLabel();
         txtDestinatario = new javax.swing.JTextField();
         lblAsunto = new javax.swing.JLabel();
@@ -39,6 +50,8 @@ public class FMailSender extends javax.swing.JFrame {
         txtAMensaje = new javax.swing.JTextArea();
         btnEnviar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        cbServidor = new javax.swing.JComboBox<>();
+        lblServidor = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,34 +59,18 @@ public class FMailSender extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(501, 431));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblServidor.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
-        lblServidor.setText("Servidor");
-        getContentPane().add(lblServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 60, 20));
-
-        cbServidor.setBackground(new java.awt.Color(255, 255, 255));
-        cbServidor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbServidorActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cbServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 320, -1));
-
         lblDestinatario.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         lblDestinatario.setText("Para ");
-        getContentPane().add(lblDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
+        getContentPane().add(lblDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
-        txtDestinatario.setBackground(new java.awt.Color(255, 255, 255));
         txtDestinatario.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
-        getContentPane().add(txtDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 340, -1));
+        getContentPane().add(txtDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 340, -1));
 
         lblAsunto.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         lblAsunto.setText("Asunto");
-        getContentPane().add(lblAsunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+        getContentPane().add(lblAsunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
+        getContentPane().add(txtAsunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 340, 30));
 
-        txtAsunto.setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(txtAsunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 340, 30));
-
-        txtAMensaje.setBackground(new java.awt.Color(255, 255, 255));
         txtAMensaje.setColumns(20);
         txtAMensaje.setRows(5);
         jScrollPane1.setViewportView(txtAMensaje);
@@ -84,6 +81,11 @@ public class FMailSender extends javax.swing.JFrame {
         btnEnviar.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         btnEnviar.setText("Enviar");
         btnEnviar.setToolTipText("");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 80, -1));
 
         btnCancelar.setBackground(new java.awt.Color(255, 255, 255));
@@ -91,50 +93,29 @@ public class FMailSender extends javax.swing.JFrame {
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/basura.png"))); // NOI18N
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
 
+        getContentPane().add(cbServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 340, -1));
+
+        lblServidor.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
+        lblServidor.setText("Servidor");
+        getContentPane().add(lblServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 60, 20));
+
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/blanco.jpg"))); // NOI18N
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, 441));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbServidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbServidorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbServidorActionPerformed
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+        new FacadeMailSender().enviarMessage(
+                correoRemitente, txtDestinatario.getText(), txtAsunto.getText(), txtAMensaje.getText(), password, 
+                server);
+    }//GEN-LAST:event_btnEnviarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FMailSender.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FMailSender.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FMailSender.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FMailSender.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FMailSender().setVisible(true);
-            }
-        });
+    public void inicializarComboBox(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addElement(server);
+        cbServidor.setModel(modelo);
+        cbServidor.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

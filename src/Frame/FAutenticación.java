@@ -5,6 +5,9 @@
  */
 package Frame;
 
+import java.awt.Frame;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author dianacastro
@@ -18,6 +21,8 @@ public class FAutenticación extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Autentificación");
+
+        llenarComboBox();
     }
 
     /**
@@ -37,6 +42,8 @@ public class FAutenticación extends javax.swing.JFrame {
         pfContrasenia = new javax.swing.JPasswordField();
         btnAceptar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        cbServidor = new javax.swing.JComboBox<>();
+        lblServidor = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
         lblDestinatario.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
@@ -51,37 +58,87 @@ public class FAutenticación extends javax.swing.JFrame {
 
         lblContrasenia.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         lblContrasenia.setText("Contraseña");
-        getContentPane().add(lblContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        getContentPane().add(lblContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
-        txtDestinatario.setBackground(new java.awt.Color(255, 255, 255));
         txtDestinatario.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
-        getContentPane().add(txtDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 210, -1));
+        txtDestinatario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDestinatarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 250, -1));
 
         lblRemitente1.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         lblRemitente1.setText("Correo");
-        getContentPane().add(lblRemitente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+        getContentPane().add(lblRemitente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 20));
 
         pfContrasenia.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
-        getContentPane().add(pfContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 210, 30));
+        pfContrasenia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfContraseniaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pfContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 250, 30));
 
         btnAceptar.setBackground(new java.awt.Color(0, 153, 255));
         btnAceptar.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setToolTipText("");
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 100, -1));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 120, 40));
 
         btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
         btnRegresar.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/flecha-hacia-la-izquierda (1).png"))); // NOI18N
-        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, 40));
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, -1, 40));
+
+        getContentPane().add(cbServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 250, -1));
+
+        lblServidor.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
+        lblServidor.setText("Servidor");
+        getContentPane().add(lblServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 60, 20));
 
         lblFondo.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/blanco.jpg"))); // NOI18N
-        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 300));
+        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        FMailSender mailSender = new FMailSender(txtDestinatario.getText(), pfContrasenia.getText(), cbServidor.getSelectedItem().toString());
+        mailSender.show();
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void pfContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfContraseniaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pfContraseniaActionPerformed
+
+    private void txtDestinatarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDestinatarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDestinatarioActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void llenarComboBox(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addElement("Gmail");
+        modelo.addElement("Outlook");
+        modelo.addElement("Hotmail");
+        modelo.addElement("Yahoo");
+        cbServidor.setModel(modelo);
+    }
     /**
      * @param args the command line arguments
      */
@@ -121,10 +178,12 @@ public class FAutenticación extends javax.swing.JFrame {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> cbServidor;
     private javax.swing.JLabel lblContrasenia;
     private javax.swing.JLabel lblDestinatario;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblRemitente1;
+    private javax.swing.JLabel lblServidor;
     private javax.swing.JPasswordField pfContrasenia;
     private javax.swing.JTextField txtDestinatario;
     // End of variables declaration//GEN-END:variables
