@@ -18,6 +18,7 @@ public class JavaMailSender implements IMailSender{
             t.connect(control.getRemitente(), control.getPassword());
             t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
             t.close();
+
             JOptionPane.showMessageDialog(null, "Correo Electronico Enviado");
         } catch (Exception ex) {
             
