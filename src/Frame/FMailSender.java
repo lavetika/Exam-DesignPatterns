@@ -52,6 +52,7 @@ public final class FMailSender extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         cbServidor = new javax.swing.JComboBox<>();
         lblServidor = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,13 +92,28 @@ public final class FMailSender extends javax.swing.JFrame {
         btnCancelar.setBackground(new java.awt.Color(255, 255, 255));
         btnCancelar.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/basura.png"))); // NOI18N
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 380, -1, -1));
 
         getContentPane().add(cbServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 340, -1));
 
         lblServidor.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         lblServidor.setText("Servidor");
         getContentPane().add(lblServidor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 60, 20));
+
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/flecha-hacia-la-izquierda (1).png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
 
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/blanco.jpg"))); // NOI18N
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 514, 441));
@@ -111,16 +127,33 @@ public final class FMailSender extends javax.swing.JFrame {
                 server);
     }//GEN-LAST:event_btnEnviarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+             limpiarCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        FAutenticación FaAurenticacion = new FAutenticación();
+        FaAurenticacion.show();
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     public void inicializarComboBox(){
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addElement(server);
         cbServidor.setModel(modelo);
         cbServidor.setEnabled(false);
     }
+    
+    public void limpiarCampos(){
+        txtDestinatario.setText("");
+        txtAsunto.setText("");
+        txtAMensaje.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbServidor;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAsunto;

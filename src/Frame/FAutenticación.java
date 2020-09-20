@@ -5,15 +5,17 @@
  */
 package Frame;
 
+import Validaciones.Validaciones;
 import java.awt.Frame;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author dianacastro
  */
 public class FAutenticación extends javax.swing.JFrame {
-
+    Validaciones validaciones;
     /**
      * Creates new form FAutenticación
      */
@@ -21,7 +23,7 @@ public class FAutenticación extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Autentificación");
-
+        validaciones = new Validaciones();
         llenarComboBox();
     }
 
@@ -115,8 +117,10 @@ public class FAutenticación extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        FMailSender mailSender = new FMailSender(txtDestinatario.getText(), pfContrasenia.getText(), cbServidor.getSelectedItem().toString());
-        mailSender.show();
+         if (validarCampos()) {
+            FMailSender mailSender = new FMailSender(txtDestinatario.getText(), pfContrasenia.getText(), cbServidor.getSelectedItem().toString());
+            mailSender.show();
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void pfContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfContraseniaActionPerformed
@@ -130,7 +134,30 @@ public class FAutenticación extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
+    private boolean validarCampos() {
+        if (!validaciones.esVacio(txtDestinatario.getText(), pfContrasenia.getText())) {
+            JOptionPane.showMessageDialog(this, "Debes llenar todos los campos.", "Error de llenado", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
+        if (!validaciones.validarFormatoCorreo(txtDestinatario.getText())) {
+            JOptionPane.showMessageDialog(this, "Ingresa un correo electronico valido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            limpiarCampos();
+            return false;
+        }
+        
+        if (!validaciones.validarCorreo(txtDestinatario.getText(), cbServidor.getSelectedItem().toString())) {
+            JOptionPane.showMessageDialog(this, "El dominio del correo electronico debe coincidir con el servicio elegido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    private void limpiarCampos(){
+        txtDestinatario.setText("");
+        pfContrasenia.setText("");
+    }
+    
     private void llenarComboBox(){
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addElement("Gmail");
