@@ -17,7 +17,7 @@ public class FMailSender extends javax.swing.JFrame {
     public FMailSender() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("MailSender");
+        this.setTitle("Mail Sender");
     }
 
     /**
