@@ -132,7 +132,7 @@ public class FAutenticación extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDestinatarioActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+       JOptionPane.showMessageDialog(this, "Direccionando a la pantalla anterior.", "Regresando...", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnRegresarActionPerformed
     private boolean validarCampos() {
         if (!validaciones.esVacio(txtDestinatario.getText(), pfContrasenia.getText())) {

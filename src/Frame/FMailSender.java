@@ -6,9 +6,10 @@
 package Frame;
 
 
-import Control.Control;
 import Fachada.FacadeMailSender;
+import Validaciones.Validaciones;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,9 +19,9 @@ public final class FMailSender extends javax.swing.JFrame {
     String password;
     String correoRemitente;
     String server;
-    /**
-     * Creates new form MailSender
-     */
+    Validaciones validaciones;
+   
+    
     public FMailSender(String correoRemitente, String password, String server) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -29,7 +30,7 @@ public final class FMailSender extends javax.swing.JFrame {
         this.password = password;
         this.correoRemitente = correoRemitente;
         this.server = server;
-        
+        this.validaciones = new Validaciones();
         inicializarComboBox();
     }
 
@@ -150,6 +151,13 @@ public final class FMailSender extends javax.swing.JFrame {
         txtAMensaje.setText("");
     }
 
+     public boolean validarCampos(){
+         if (!validaciones.esVacioForm(txtDestinatario.getText(), txtAsunto.getText(), txtAMensaje.getText())) {
+            JOptionPane.showMessageDialog(this, "Debes llenar todos los campos.", "Error de llenado", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+         return true;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEnviar;
