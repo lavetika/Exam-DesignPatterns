@@ -14,7 +14,7 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
 /**
- *
+ * 
  * @author laura
  */
 public class Control {

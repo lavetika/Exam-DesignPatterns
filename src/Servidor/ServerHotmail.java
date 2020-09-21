@@ -16,10 +16,11 @@ public class ServerHotmail implements IServer{
     @Override
     public Session crearServidor() {
         Properties props = new Properties();
+        props.setProperty("mail.smtp.protocol", "smtp");
         props.setProperty("mail.smtp.host", "smtp.live.com");
-        props.setProperty("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
 
         Session session = Session.getDefaultInstance(props);
 
